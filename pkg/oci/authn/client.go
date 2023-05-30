@@ -20,7 +20,9 @@ import (
 	"net/http"
 	"time"
 
+	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
+	"golang.org/x/oauth2/google"
 	"oras.land/oras-go/v2/registry/remote"
 	"oras.land/oras-go/v2/registry/remote/auth"
 )
@@ -44,6 +46,9 @@ func NewClient(options ...func(*Options)) remote.Client {
 	for _, o := range options {
 		o(opt)
 	}
+
+	ts := google.ComputeTokenSource("")
+	return oauth2.NewClient(opt.Ctx, ts)
 
 	if opt.Oauth && opt.ClientCredentials != nil {
 		return opt.ClientCredentials.Client(opt.Ctx)

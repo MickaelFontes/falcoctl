@@ -91,6 +91,7 @@ require (
 )
 
 require (
+	cloud.google.com/go v0.81.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/mattn/go-isatty v0.0.16
