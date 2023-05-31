@@ -211,12 +211,7 @@ func (p Printer) WithWriter(writer io.Writer) *Printer {
 // WithScope sets the scope for the current printer.
 func (p Printer) WithScope(scope string) *Printer {
 	if scope != "" {
-		s := pterm.Scope{}
-		if p.DisableStyling {
-			s = pterm.Scope{Text: scope}
-		} else {
-			s = pterm.Scope{Text: scope, Style: pterm.NewStyle(pterm.FgGray)}
-		}
+		s := pterm.Scope{Text: scope, Style: pterm.NewStyle(pterm.FgGray)}
 
 		p.Info = p.Info.WithScope(s)
 		p.Error = p.Error.WithScope(s)
@@ -239,6 +234,9 @@ func (p *Printer) DisableStylingf() {
 // EnableStyling enables styling globally for all existing printers.
 func (p *Printer) EnableStyling() {
 	pterm.EnableStyling()
+	if p.DisableStyling {
+		pterm.DisableColor()
+	}
 }
 
 // ExitOnErr aborts the execution in case of errors, and prints the error using the configured printer.
